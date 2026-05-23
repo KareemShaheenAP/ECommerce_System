@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ECommerce_System
+﻿namespace ECommerce_System.Products
 {
-
     public class Product
     {
         private double _price;

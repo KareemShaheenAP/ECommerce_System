@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce_System
+namespace ECommerce_System.Payment
 {
     public interface IPayment
     {

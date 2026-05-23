@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ECommerce_System.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce_System
+namespace ECommerce_System.Carts
 {
     public class CartItem
     {

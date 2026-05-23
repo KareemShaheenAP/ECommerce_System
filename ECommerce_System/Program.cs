@@ -1,10 +1,15 @@
-﻿using System.ComponentModel;
+﻿using ECommerce_System.Carts;
+using ECommerce_System.Orders;
+using ECommerce_System.Payment;
+using ECommerce_System.Users;
+using ECommerce_System.Products;
+using System.ComponentModel;
 
 namespace ECommerce_System
 {
     enum UserLogin
     {
-        Register, Login
+        Register, Login, View
     }
     enum UserType
     {
@@ -15,9 +20,9 @@ namespace ECommerce_System
         [Description("Creidt Card")] Credit,Paypal,Cash
 
     }
-    internal class Program
+    public class Program
     {
-        static List<Users> users = new List<Users>();
+        static List<User> users = new List<User>();
         static List<Product> products = new List<Product>();
         
         static void ViewProduct()
@@ -87,12 +92,12 @@ namespace ECommerce_System
                         switch (selectedType)
                         {
                             case UserType.Admin:
-                                Users adminUser = new AdminUser(userName, userPassword, "Admin");
+                                User adminUser = new AdminUser(userName, userPassword, "Admin");
                                 users.Add(adminUser);
                                 break;
 
                             case UserType.Customer:
-                                Users customerUser = new CustomerUser(userName, userPassword, "Customer");
+                                User customerUser = new CustomerUser(userName, userPassword, "Customer");
                                 users.Add(customerUser);
                                 break;
 
@@ -307,6 +312,12 @@ namespace ECommerce_System
                                         break;
                                 }
                             }
+                        }
+                        break;
+                    case UserLogin.View:
+                        foreach (User user in users)
+                        {
+                            Console.WriteLine($"ID: {user.Id} - Name: {user.UserName} - Password: {user.Password} - Type:{user.UserType}");
                         }
                         break;
                     default:

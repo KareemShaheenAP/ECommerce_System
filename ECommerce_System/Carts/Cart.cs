@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace ECommerce_System
+using ECommerce_System.Products;
+namespace ECommerce_System.Carts
 {
     public class Cart
     {

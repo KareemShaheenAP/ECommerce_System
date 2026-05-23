@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ECommerce_System.Carts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce_System
+namespace ECommerce_System.Orders
 {
     public class Order
     {

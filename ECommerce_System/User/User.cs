@@ -1,13 +1,13 @@
-﻿namespace ECommerce_System
+﻿namespace ECommerce_System.Users
 {
-    public class Users
+    public class User
     {
         public string Password { get; }
         public int Id { get; } = 0 ;
         public string UserType { get; protected set; }
         public string UserName { get; }
 
-        public Users(string userName,string password)
+        public User(string userName,string password)
         {
             if (string.IsNullOrEmpty(userName)) throw new ArgumentNullException("Invalid User Name");
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("Invalid Password");
@@ -18,7 +18,7 @@
         }
 
     }
-    public class AdminUser : Users
+    public class AdminUser : User
     {
         public AdminUser(string userName, string password, string userType) : base(userName, password)
         {
@@ -26,7 +26,7 @@
         }
     }
 
-    public class CustomerUser : Users
+    public class CustomerUser : User
     {
         public CustomerUser(string userName, string password, string userType) : base(userName, password)
         {
