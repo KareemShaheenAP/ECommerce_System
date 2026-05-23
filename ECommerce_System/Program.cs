@@ -69,11 +69,10 @@ namespace ECommerce_System
         {
             while (true)
             {
-                Console.WriteLine("Please Choose from below");
+                Console.WriteLine("\n---Please Choose from below");
                 Console.WriteLine("01-Register");
                 Console.WriteLine("02-Login");
                 Console.WriteLine("03-View Users");
-                Console.WriteLine("========================");
                 var selection = int.TryParse(Console.ReadLine(), out int entry);
                 UserLogin userselection = (UserLogin)entry - 1;
                 Console.Clear();
@@ -89,25 +88,38 @@ namespace ECommerce_System
                         Console.WriteLine("Enter Type: {1 = Admin / 2 = Customer}");
                         selection = int.TryParse(Console.ReadLine(), out int usertype);
                         UserType selectedType = (UserType)usertype - 1;
+                        string Usertype = "";
                         switch (selectedType)
                         {
                             case UserType.Admin:
-                                User adminUser = new AdminUser(userName, userPassword, "Admin");
-                                users.Add(adminUser);
+                                Usertype = "Admin";
                                 break;
-
                             case UserType.Customer:
-                                User customerUser = new CustomerUser(userName, userPassword, "Customer");
-                                users.Add(customerUser);
+                                Usertype = "Customer";
                                 break;
-
                             default:
                                 Console.WriteLine("\n---Invalid Selection, Aborted");
-                                Console.WriteLine("========================\n");
-                                continue;
+                                return;
                         }
-                        Console.WriteLine("\n---Account Created successfully");
-                        Console.WriteLine("========================\n");
+                        bool UserAlreadyExist = false;
+                        foreach (User user in users)
+                        {
+                            if (user.UserName == userName)
+                            {
+                                UserAlreadyExist = true;
+                                break;
+                            }
+                        }
+                        if (UserAlreadyExist)
+                        {
+                            Console.WriteLine("user with same name already exist");
+                        }
+                        else
+                        {
+                            User adminUser = new AdminUser(userName, userPassword, "Admin");
+                            users.Add(adminUser);
+                            Console.WriteLine("\n---Account Created successfully");
+                        }
                         break;
                     case UserLogin.Login:
                         Console.WriteLine("\n---Enter UserName:");
@@ -116,23 +128,23 @@ namespace ECommerce_System
                         Console.WriteLine("Enter Password:");
                         userPassword = Console.ReadLine();
                         //
-                        var logginUser = "";
+                        User logginUser = null;
                         foreach (var user in users)
                         {
                             if (user.UserName == userName && user.Password == userPassword)
                             {
-                                logginUser = user.UserType;
+                                logginUser = user;
                                 break;
                             }
                         }
-                        if (logginUser == "")
+                        if (logginUser is null)
                         {
                             Console.WriteLine("\n---Invalid username or password.");
                             break;
                         }
-                        if (logginUser == "Admin")
+                        if (logginUser.UserType == "Admin")
                         {
-                            while (logginUser == "Admin")
+                            while (logginUser != null)
                             {
                                 Console.WriteLine("\n--- Admin Menu ---");
                                 Console.WriteLine("1. Add Product");
@@ -194,7 +206,7 @@ namespace ECommerce_System
 
                                     case 5:
                                         Console.Clear();
-                                        logginUser = "";
+                                        logginUser = null;
                                         break;
 
                                     default:
@@ -202,10 +214,10 @@ namespace ECommerce_System
                                 }
                             }
                         }
-                        else if (logginUser == "Customer")
+                        else if (logginUser.UserType == "Customer")
                         {
-                            Cart cart = new Cart();
-                            while (logginUser == "Customer")
+                            Cart cart = logginUser.Cart;
+                            while (logginUser != null)
                             {
                                 Console.WriteLine("\n--- Customer Menu ---");
                                 Console.WriteLine("1. View Products");
@@ -305,8 +317,9 @@ namespace ECommerce_System
                                         }                     
                                         break;
                                     case 6:
-                                        logginUser = "";
+                                       
                                         Console.Clear();
+                                        logginUser = null;
                                         break;
                                     default:
                                         break;
@@ -315,9 +328,13 @@ namespace ECommerce_System
                         }
                         break;
                     case UserLogin.View:
-                        foreach (User user in users)
+                        if (users.Count == 0) Console.WriteLine("\n---No user available");
+                        else
                         {
-                            Console.WriteLine($"ID: {user.Id} - Name: {user.UserName} - Password: {user.Password} - Type:{user.UserType}");
+                            foreach (User user in users)
+                            {
+                                Console.WriteLine($"ID: {user.Id} - Name: {user.UserName} - Password: {user.Password} - Type:{user.UserType}");
+                            }
                         }
                         break;
                     default:

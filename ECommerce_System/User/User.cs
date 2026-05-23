@@ -1,4 +1,6 @@
-﻿namespace ECommerce_System.Users
+﻿using ECommerce_System.Carts;
+
+namespace ECommerce_System.Users
 {
     public class User
     {
@@ -6,7 +8,7 @@
         public int Id { get; } = 0 ;
         public string UserType { get; protected set; }
         public string UserName { get; }
-
+        public Cart Cart { get; protected set; }
         public User(string userName,string password)
         {
             if (string.IsNullOrEmpty(userName)) throw new ArgumentNullException("Invalid User Name");
@@ -31,6 +33,7 @@
         public CustomerUser(string userName, string password, string userType) : base(userName, password)
         {
             UserType = userType;
+            Cart = new Cart();
         }
     }
 }
