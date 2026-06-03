@@ -116,8 +116,19 @@ namespace ECommerce_System
                         }
                         else
                         {
-                            User adminUser = new AdminUser(userName, userPassword, "Admin");
-                            users.Add(adminUser);
+                            User RegisteredUser;
+                            if (Usertype == "Customer")
+                            {
+                                RegisteredUser = new CustomerUser(userName, userPassword, Usertype);
+                                var c = (CustomerUser)RegisteredUser;
+                            }
+                            else
+                            {
+                                RegisteredUser = new AdminUser(userName, userPassword, Usertype);
+                                var c = (AdminUser)RegisteredUser;
+                            }
+                            
+                            users.Add(RegisteredUser);
                             Console.WriteLine("\n---Account Created successfully");
                         }
                         break;
@@ -265,13 +276,16 @@ namespace ECommerce_System
                                         }
                                         break;
                                     case 3:
-                                        cart.ViewItems();
+                                        if (!cart.ViewItems())
+                                        {
+                                            break;
+                                        }
                                         Console.Write("\n---Enter Product ID to remove: ");
                                         int removePoductId = int.Parse(Console.ReadLine());
                                         if (cart.RemoveFromCart(removePoductId))
                                         {
                                             Console.WriteLine("\n---Product has been removed");
-                                        } 
+                                        }
                                         else
                                         {
                                             Console.WriteLine("\n---Invalid Product ID");

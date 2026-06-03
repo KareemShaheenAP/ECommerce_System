@@ -34,11 +34,12 @@ namespace ECommerce_System.Carts
             }
             return false;
         }
-        public void ViewItems()
+        public bool ViewItems()
         {
             if (Items.Count == 0) 
             {
                 Console.WriteLine("No Items Available");
+                return false;
             }
             else
             {
@@ -47,6 +48,7 @@ namespace ECommerce_System.Carts
                 {
                     Console.WriteLine($"ID: {item.Product.Id} - Name: {item.Product.Name} - Qty: {item.ProductQuanity}");
                 }
+                return true;
             }  
         }
 
